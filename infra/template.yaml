@@ -1,0 +1,100 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >-
+  Drop a string table into s3://<bucket>/incoming/ and get it back translated, with a QA
+  report, in translated/. Claude on Amazon Bedrock + Titan embeddings for retrieval.
+
+Parameters:
+  Locales:
+    Type: String
+    Default: de-DE,fr-FR,es-MX,ja-JP
+    Description: Comma-separated target locales
+  ModelId:
+    Type: String
+    Default: anthropic.claude-opus-5-5
+  EmbeddingModelId:
+    Type: String
+    Default: amazon.titan-embed-text-v2:0
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Architectures: [arm64]
+    Timeout: 900
+    MemorySize: 1024
+    Tracing: Active
+
+Resources:
+  TranslationBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-translations
+      VersioningConfiguration:
+        Status: Enabled # keeps every version of the glossary and translation memory
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault: { SSEAlgorithm: AES256 }
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  TranslateFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Translate string tables uploaded to incoming/
+      CodeUri: ../build/lambda/
+      Handler: translator.lambda_handler.handler
+      ReservedConcurrentExecutions: 5 # bounds Bedrock spend and throughput
+      Environment:
+        Variables:
+          LOCALES: !Ref Locales
+          MODEL_ID: !Ref ModelId
+          EMBEDDER: titan
+      Policies:
+        # Bucket referenced by name (not !Ref) to avoid a circular dependency with the trigger.
+        - S3ReadPolicy:
+            BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-translations
+        - S3WritePolicy:
+            BucketName: !Sub ${AWS::StackName}-${AWS::AccountId}-translations
+        - Statement:
+            - Effect: Allow
+              Action: [bedrock:InvokeModel, bedrock:InvokeModelWithResponseStream]
+              Resource:
+                - !Sub arn:${AWS::Partition}:bedrock:${AWS::Region}::foundation-model/${EmbeddingModelId}
+                - !Sub arn:${AWS::Partition}:bedrock:${AWS::Region}::foundation-model/${ModelId}
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/*
+      Events:
+        Upload:
+          Type: S3
+          Properties:
+            Bucket: !Ref TranslationBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - { Name: prefix, Value: incoming/ }
+                  - { Name: suffix, Value: .csv }
+
+  ErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Translation function errors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref TranslateFunction
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+
+Outputs:
+  BucketName:
+    Value: !Ref TranslationBucket
+  FunctionName:
+    Value: !Ref TranslateFunction

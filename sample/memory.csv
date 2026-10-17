@@ -1,0 +1,21 @@
+source,locale,target
+"Please open the LearnHub app on your phone or tablet and log in using {{company_url}} to access the course(s). If you have any questions, please reach out to your supervisor.",de-DE,"Bitte öffnen Sie die LearnHub-App auf Ihrem Smartphone oder Tablet und melden Sie sich mit {{company_url}} an, um auf den Kurs bzw. die Kurse zuzugreifen. Bei Fragen wenden Sie sich bitte an Ihre Führungskraft."
+"Please open the LearnHub app on your phone or tablet and log in using {{company_url}} to access the course(s). If you have any questions, please reach out to your supervisor.",fr-FR,"Veuillez ouvrir l'application LearnHub sur votre téléphone ou votre tablette et vous connecter avec {{company_url}} pour accéder au(x) cours. Pour toute question, veuillez contacter votre responsable."
+"Please open the LearnHub app on your phone or tablet and log in using {{company_url}} to access the course(s). If you have any questions, please reach out to your supervisor.",es-MX,"Abra la aplicación LearnHub en su celular o tableta e inicie sesión con {{company_url}} para acceder al curso o los cursos. Si tiene alguna pregunta, comuníquese con su supervisor."
+"Please open the LearnHub app on your phone or tablet and log in using {{company_url}} to access the course(s). If you have any questions, please reach out to your supervisor.",ja-JP,"スマートフォンまたはタブレットでLearnHubアプリを開き、{{company_url}} を使用してログインし、コースにアクセスしてください。ご不明な点がありましたら、上司にお問い合わせください。"
+Your certificate is ready to download.,de-DE,Ihr Zertifikat steht zum Download bereit.
+Your certificate is ready to download.,fr-FR,Votre certificat est prêt à être téléchargé.
+Your certificate is ready to download.,es-MX,Su certificado está listo para descargarse.
+Your certificate is ready to download.,ja-JP,修了証をダウンロードできます。
+You have {count} courses due this week.,de-DE,Diese Woche sind {count} Kurse fällig.
+You have {count} courses due this week.,fr-FR,Vous avez {count} cours à terminer cette semaine.
+You have {count} courses due this week.,es-MX,Tiene {count} cursos pendientes esta semana.
+You have {count} courses due this week.,ja-JP,今週期限のコースが{count}件あります。
+Start learning path,de-DE,Lernpfad starten
+Start learning path,fr-FR,Commencer le parcours de formation
+Start learning path,es-MX,Iniciar ruta de aprendizaje
+Start learning path,ja-JP,学習パスを開始
+Log out,de-DE,Abmelden
+Log out,fr-FR,Se déconnecter
+Log out,es-MX,Cerrar sesión
+Log out,ja-JP,ログアウト

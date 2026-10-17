@@ -1,0 +1,13 @@
+key,source,context
+login.reminder,"Please open the LearnHub app on your phone or tablet and log in using {{company_url}} to access the course(s). If you have any questions, please reach out to your supervisor.",push notification
+cert.ready,Your certificate is ready to download.,toast
+course.due_today,You have {count} courses due today.,dashboard banner
+course.overdue,"{name}, your course ""{course}"" is overdue. Please complete it by {date}.",email body
+cert.expiring,"Your certificate for {course} expires in 30 days. <a href=""{{renew_url}}"">Renew now</a>.",email body
+path.continue,Continue learning path,button
+path.completed,Congratulations! You completed the learning path and earned a certificate.,completion screen
+supervisor.assigned,Your supervisor assigned you a new course: {course}.,notification
+support.contact,Need help? Visit https://help.learnhub.example or contact your supervisor.,help screen
+auth.logout,Log out,menu item
+quiz.score,You scored %(score)d% on the quiz. The passing score is 80%.,quiz result
+offline.banner,You are offline. Your progress will sync when you reconnect.,banner

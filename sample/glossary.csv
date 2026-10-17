@@ -1,0 +1,18 @@
+term,locale,translation,dnt
+LearnHub,*,LearnHub,true
+course,de-DE,Kurs,false
+course,fr-FR,cours,false
+course,es-MX,curso,false
+course,ja-JP,コース,false
+supervisor,de-DE,Führungskraft,false
+supervisor,fr-FR,responsable,false
+supervisor,es-MX,supervisor,false
+supervisor,ja-JP,上司,false
+learning path,de-DE,Lernpfad,false
+learning path,fr-FR,parcours de formation,false
+learning path,es-MX,ruta de aprendizaje,false
+learning path,ja-JP,学習パス,false
+certificate,de-DE,Zertifikat,false
+certificate,fr-FR,certificat,false
+certificate,es-MX,certificado,false
+certificate,ja-JP,修了証,false
